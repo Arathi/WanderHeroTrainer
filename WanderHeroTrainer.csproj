@@ -10,6 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Game\**" />
+    <EmbeddedResource Remove="Game\**" />
+    <None Remove="Game\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
     <PackageReference Include="BepInEx.Core" Version="5.*" />
     <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*" />
@@ -23,6 +29,7 @@
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>Game\WanderHero_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
 </Project>

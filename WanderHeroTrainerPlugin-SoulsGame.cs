@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using SoulsGame;
 using HarmonyLib;
 
+// ！需要修改！ 分析SoulsGame.CustomSaveData，Used By
+using SaveDataOper = jjijijjijijijijjiijjiiiijiiijijiiiiijjjiijijjii;
+
 namespace WanderHeroTrainer
 {
     public partial class WanderHeroTrainerPlugin
     {
+        // ！需要修改！ 反编译SaveDataOper，找到CustomSaveData的实例对象
+        const string fieldNameCustomSaveData = "ijjiijjjjjijjiijijiijjijjijijiiiiiiijjiiiiijjji";
+
         // 获取CustomSaveData实例
         public CustomSaveData SaveData
         {
             get
             {
-                Traverse classTraverse = Traverse.Create(typeof(jijiijjjjijjiijiijijjjjiijjiiijjjiiijjjijjiiijj));
-                Traverse<CustomSaveData> fieldTraverse = classTraverse.Field<CustomSaveData>("jjiijiijjiijjjiijijjiijjjiiiiijiiijjijiijjjjiij");
+                Traverse classTraverse = Traverse.Create(typeof(SaveDataOper));
+                Traverse<CustomSaveData> fieldTraverse = classTraverse.Field<CustomSaveData>(fieldNameCustomSaveData);
                 return fieldTraverse.Value;
             }
         }
@@ -21,7 +27,8 @@ namespace WanderHeroTrainer
         // 根据itemId获取物品信息
         public Json_Item GetItemById(string itemId)
         {
-            return Cfg_Item.Inst.jjijjijijjjijiiijiiijjjjjjjjijjijjijiiiiijjjjij(itemId);
+            // ！需要修改！ 反编译SoulsGame.Cfg_Item，随便找一个参数为(string)返回Json_Item的方法，有很多，效果好像都一样
+            return Cfg_Item.Inst.ijjiiijijjijiijiiiijiijjjjjijiijiijijiiijjiijjj(itemId);
         }
 
         // 获取初始物品id列表
@@ -112,19 +119,22 @@ namespace WanderHeroTrainer
         // 获取背包中的物品ID列表
         private List<string> GetItemIdListInPack()
         {
-            return jijiijjjjijjiijiijijjjjiijjiiijjjiiijjjijjiiijj.jijjijiijjjijjjiiiiijijjjiiijijjijiijjjjjijjjjj();
+            // ！需要修改！ 分析CustomSaveData._pack
+            return SaveDataOper.iiiiiijijiijjiiiiijijijiijjijjijijijiiijijijjii();
         }
 
         // 根据物品ID获取背包中的物品数量
         private int GetItemAmountInPack(string itemId)
         {
-            return jijiijjjjijjiijiijijjjjiijjiiijjjiiijjjijjiiijj.jjjjiiiiijijjjiijiijjjjiijjiiijiijjjjjijjjjiiii(itemId);
+            // ！需要修改！ 
+            return SaveDataOper.jijjiijjiiiiijjjijijijjijjjjiiijiiijjjijjjijjjj(itemId);
         }
 
         // 往背包中添加指定数量的物品（传负值可以减少）
         private void AddItemToPack(string itemId, int delta)
         {
-            jijiijjjjijjiijiijijjjjiijjiiijjjiiijjjijjiiijj.jiiijiiiiijjiijjjijijjjjjijiijjjjiijijjiiiijjjj(itemId, delta);
+            // ！需要修改！ 
+            SaveDataOper.jijjijjijijijjjjijijiiijijiiijjjijjiiijjjjjiiji(itemId, delta);
         }
     }
 }

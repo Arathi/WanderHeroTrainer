@@ -1,3 +1,5 @@
 Game
+.vs/
 bin/
 obj/
+*.sln
