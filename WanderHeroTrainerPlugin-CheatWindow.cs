@@ -24,8 +24,12 @@ namespace WanderHeroTrainer
             "后勤",
             "医疗"
         };
+
+        private Dictionary<string, string> itemAmounts = new Dictionary<string, string>();
         
         private Dictionary<string, string> inputs = new Dictionary<string, string>();
+
+        Vector2 scrollPosition;
 
         public void GuiWindowPainting(int windowId)
         {
@@ -443,6 +447,8 @@ namespace WanderHeroTrainer
             GUILayout.BeginArea(new Rect(10, 20, WindowRect.width - 20, WindowRect.height - 30));
             {
                 GUILayout.Label("编辑卡牌信息");
+
+                GUILayout.Label("", GUILayout.ExpandHeight(true));
                 
                 GUILayout.BeginHorizontal();
                 {
@@ -464,19 +470,13 @@ namespace WanderHeroTrainer
 
         private void DrawPackEdit(int windowId)
         {
-            GUILayout.BeginArea(new Rect(10, 20, WindowRect.width - 20, WindowRect.height - 30));
+            var labelWidth = GUILayout.MinWidth((WindowRect.width - 20) * 0.40F);
+            var textFieldWidth = GUILayout.MinWidth((WindowRect.width - 20) * 0.50F);
+
+            GUILayout.BeginArea(new Rect(10, 20, WindowRect.width - 20, WindowRect.height - 20));
             {
                 GUILayout.Label("编辑背包");
-                GUILayout.Label("");
                 
-                // 
-                GUILayout.BeginHorizontal();
-                {
-                    
-                }
-                GUILayout.EndHorizontal();
-                
-                GUILayout.Label("");
                 GUILayout.BeginHorizontal();
                 {
                     if (GUILayout.Button("退出"))
@@ -484,13 +484,82 @@ namespace WanderHeroTrainer
                         Logger.LogInfo("退出");
                         Scene = GuiScene.MainMenu;
                     }
+                    if (GUILayout.Button("刷新"))
+                    {
+                        Logger.LogInfo("刷新");
+                        LoadPack();
+                    }
                     if (GUILayout.Button("保存"))
                     {
                         Logger.LogInfo("保存");
-                        Scene = GuiScene.MainMenu;
+                        SavePack();
+                        // Scene = GuiScene.MainMenu;
                     }
                 }
                 GUILayout.EndHorizontal();
+
+                /*
+                const string keyItemId = "text_item_id";
+                GUILayout.BeginHorizontal();
+                {
+                    var itemId = "";
+                    if (inputs.ContainsKey(keyItemId)) {
+                        itemId = inputs[keyItemId];
+                    }
+                    var changed = GUILayout.TextField(itemId, textFieldWidth);
+                    if (changed != itemId) {
+                        inputs[keyItemId] = changed;
+                    }
+
+                    // GUILayout.Label("");
+
+                    if (GUILayout.Button("添加物品"))
+                    {
+                        var item = GetItemById(itemId);
+                        if (item != null) {
+                            Logger.LogInfo($"添加一个[{item.rName}]({itemId})");
+                            AddItemToPack(itemId, 1);
+                            LoadPack();
+                        }
+                        else
+                        {
+                            Logger.LogInfo("物品{itemId}不存在");
+                        }
+                    }
+                }
+                GUILayout.EndHorizontal();
+                */
+
+                scrollPosition = GUILayout.BeginScrollView(
+                    scrollPosition, 
+                    GUILayout.Width(WindowRect.width - 20),
+                    GUILayout.Height(WindowRect.height - 80)
+                );
+                {
+                    if (itemAmounts.Count == 0) {
+                        LoadPack();
+                    }
+
+                    foreach (var item in itemAmounts)
+                    {
+                        String itemId = item.Key;
+                        String text = item.Value;
+                        GUILayout.BeginHorizontal();
+                        {
+                            string itemName = GetItemName(itemId);
+                            GUILayout.Label(itemName, labelWidth);
+                            string changed = GUILayout.TextField(text, textFieldWidth);
+                            if (changed != text)
+                            {
+                                itemAmounts[itemId] = changed;
+                            }
+                        }
+                        GUILayout.EndHorizontal();
+                    }
+                }
+                GUILayout.EndScrollView();
+
+                // GUILayout.Label("", GUILayout.ExpandHeight(true));
             }
             GUILayout.EndArea();
         }
@@ -569,8 +638,9 @@ namespace WanderHeroTrainer
                     }
                 }
                 GUILayout.EndHorizontal();
+
+                GUILayout.Label("", GUILayout.ExpandHeight(true));
                 
-                GUILayout.Label("");
                 GUILayout.BeginHorizontal();
                 {
                     if (GUILayout.Button("退出"))

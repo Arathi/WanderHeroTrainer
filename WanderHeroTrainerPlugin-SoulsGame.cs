@@ -38,9 +38,10 @@ namespace WanderHeroTrainer
             {
                 List<string> ids = new List<string>();
                 
-                Traverse classTraverse = Traverse.Create(typeof(Cfg_Item));
-                Traverse<Json_Item[]> fieldTraverse = classTraverse.Field<Json_Item[]>("_initItems");
-
+                // Traverse classTraverse = Traverse.Create(typeof(Cfg_Item));
+                // Traverse<Cfg_Item> instTraverse = classTraverse.Field<Cfg_Item>("Inst");
+                // Traverse<Json_Item[]> fieldTraverse = classTraverse.Field<Json_Item[]>("_initItems");
+                Traverse<Json_Item[]> fieldTraverse = Traverse.Create(Cfg_Item.Inst).Field<Json_Item[]>("_initItems");
                 var items = fieldTraverse.Value;
                 foreach (var item in items)
                 {
@@ -114,6 +115,43 @@ namespace WanderHeroTrainer
             }
             saveData._leaderExp = leaderExp;
             Logger.LogInfo("团长信息保存完成");
+        }
+
+        // 加载背包信息
+        private void LoadPack() {
+            Logger.LogInfo("正在加载背包信息");
+            itemAmounts.Clear();
+
+            var initItems = ItemIdList;
+            foreach (var itemId in initItems) {
+                itemAmounts[itemId] = "0";
+            }
+
+            var itemIdList = GetItemIdListInPack();
+            foreach (var itemId in itemIdList) {
+                itemAmounts[itemId] = GetItemAmountInPack(itemId) + "";
+            }
+            Logger.LogInfo("背包信息加载完成");
+        }
+
+        private void SavePack() {
+            foreach (var item in itemAmounts) {
+                string itemId = item.Key;
+                string itemName = GetItemName(itemId);
+                string amountInput = item.Value;
+                int amountLast = GetItemAmountInPack(itemId);
+                bool parseSucc = int.TryParse(amountInput, out int amount);
+                if (parseSucc) {
+                    int delta = amount - amountLast;
+                    if (delta != 0) {
+                        Logger.LogInfo($"物品[{itemName}]({itemId})数量发生变化：{amountLast} -> {amount}，差值：{delta}");
+                        AddItemToPack(itemId, delta);
+                    }
+                }
+                else {
+                    Logger.LogInfo($"物品[{itemName}]({itemId})数量无效：{amountInput}");
+                }
+            }
         }
 
         // 获取背包中的物品ID列表

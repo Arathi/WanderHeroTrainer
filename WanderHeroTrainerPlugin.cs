@@ -1,4 +1,6 @@
-﻿using BepInEx;
+﻿using System.Collections.Generic;
+
+using BepInEx;
 using BepInEx.Configuration;
 using SoulsGame;
 using UnityEngine;
@@ -10,10 +12,10 @@ namespace WanderHeroTrainer
     {
         const string GUID = "com.undsf.bepinex.WanderHeroTrainer";
         const string NAME = "WanderHeroTrainer";
-        const string VERSION = "0.4.2";
+        const string VERSION = "0.5.0";
         const string GAME_VERSION = "0.8.230302";
 
-        const int WINDOW_ID = 724725413;
+        const int WINDOW_ID = 0x43684574; // ChEt
 
         private ConfigEntry<bool> Enabled { get; set; }
         private ConfigEntry<KeyCode> EnableKey { get; set; }
@@ -26,6 +28,8 @@ namespace WanderHeroTrainer
         private bool DisplayGui { get; set; }
 
         private GuiScene Scene { get; set; }
+        
+        private Dictionary<string, string> itemNames = new Dictionary<string, string>();
 
         private void Awake()
         {
@@ -95,6 +99,15 @@ namespace WanderHeroTrainer
 
         private void OnDestroy() {
             Logger.LogInfo($"{GUID} {VERSION} 已销毁");
+        }
+
+        string GetItemName(string itemId) {
+            if (itemNames.ContainsKey(itemId)) {
+                return itemNames[itemId];
+            }
+            Json_Item item = GetItemById(itemId);
+            itemNames[itemId] = item.rName;
+            return item.rName;
         }
     }
 }
