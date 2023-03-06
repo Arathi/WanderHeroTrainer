@@ -10,8 +10,8 @@ namespace WanderHeroTrainer
     {
         const string GUID = "com.undsf.bepinex.WanderHeroTrainer";
         const string NAME = "WanderHeroTrainer";
-        const string VERSION = "0.4.1";
-        const string GAME_VERSION = "0.8.230217";
+        const string VERSION = "0.4.2";
+        const string GAME_VERSION = "0.8.230302";
 
         const int WINDOW_ID = 724725413;
 

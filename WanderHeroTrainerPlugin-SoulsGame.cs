@@ -4,14 +4,14 @@ using SoulsGame;
 using HarmonyLib;
 
 // ！需要修改！ 分析SoulsGame.CustomSaveData，Used By
-using SaveDataOper = jjijijjijijijijjiijjiiiijiiijijiiiiijjjiijijjii;
+using SaveDataOper = ijjjjjijjjjiiijjijijiiijjiijiiiiijjjiijjjjjjjij;
 
 namespace WanderHeroTrainer
 {
     public partial class WanderHeroTrainerPlugin
     {
         // ！需要修改！ 反编译SaveDataOper，找到CustomSaveData的实例对象
-        const string fieldNameCustomSaveData = "ijjiijjjjjijjiijijiijjijjijijiiiiiiijjiiiiijjji";
+        const string fieldNameCustomSaveData = "ijjiiijjjjijijiijjijijjjjjijiijjiiijiijjjiiijji";
 
         // 获取CustomSaveData实例
         public CustomSaveData SaveData
@@ -28,7 +28,7 @@ namespace WanderHeroTrainer
         public Json_Item GetItemById(string itemId)
         {
             // ！需要修改！ 反编译SoulsGame.Cfg_Item，随便找一个参数为(string)返回Json_Item的方法，有很多，效果好像都一样
-            return Cfg_Item.Inst.ijjiiijijjijiijiiiijiijjjjjijiijiijijiiijjiijjj(itemId);
+            return Cfg_Item.Inst.jiiijjjiijjjiiijiiijijiiiijjjjjiijjijiijiiijjji(itemId);
         }
 
         // 获取初始物品id列表
@@ -119,22 +119,22 @@ namespace WanderHeroTrainer
         // 获取背包中的物品ID列表
         private List<string> GetItemIdListInPack()
         {
-            // ！需要修改！ 分析CustomSaveData._pack
-            return SaveDataOper.iiiiiijijiijjiiiiijijijiijjijjijijijiiijijijjii();
+            // ！需要修改！ 分析CustomSaveData._pack，Read By
+            return SaveDataOper.jijiiijijjiijijjjiijjiiijjjiijjjjijiijjijjjjiij();
         }
 
         // 根据物品ID获取背包中的物品数量
         private int GetItemAmountInPack(string itemId)
         {
-            // ！需要修改！ 
-            return SaveDataOper.jijjiijjiiiiijjjijijijjijjjjiiijiiijjjijjjijjjj(itemId);
+            // ！需要修改！ 同上
+            return SaveDataOper.jijiijijjjiijjjjiiiiijijiijiijjjjjjijjjiijijjij(itemId);
         }
 
         // 往背包中添加指定数量的物品（传负值可以减少）
         private void AddItemToPack(string itemId, int delta)
         {
-            // ！需要修改！ 
-            SaveDataOper.jijjijjijijijjjjijijiiijijiiijjjijjiiijjjjjiiji(itemId, delta);
+            // ！需要修改！ 同上
+            SaveDataOper.iiiiiijiijijjjjijjjjjjijjjjijjjjiiijiiijiijiiij(itemId, delta);
         }
     }
 }
